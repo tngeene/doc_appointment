@@ -1,0 +1,17 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Log In{% endblock %}
+
+{% block content %}
+    <h4 class="text-center">Log In</h4>
+    <form method="post">
+        {% csrf_token %}
+        {% include 'partials/forms/form.html' %}
+        <div class="clearfix py-3">
+            <div class="float-left pt-1">
+                <a href="{% url 'account_reset_password' %}">Forgot password?</a>
+            </div>
+            <button class="btn btn-dark float-right px-3" type="submit">Log In</button>
+        </div>
+    </form>
+{% endblock %}
