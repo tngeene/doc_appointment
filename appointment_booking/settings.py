@@ -39,8 +39,10 @@ INSTALLED_APPS = [
 
     # internal apps
     'dashboard',
+    'doctor_dashboard',
     'home',
     'users',
+    'patient_dashboard',
 ]
 
 MIDDLEWARE = [
