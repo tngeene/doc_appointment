@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
 
     # internal apps
+    'core',
     'dashboard',
     'doctor_dashboard',
     'home',
