@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
+from core.models import CommonInfo
 
 class UserAccountManager(UserManager):
     def create_user(self, username=None, email=None, password=None, **extra_fields):
@@ -33,8 +33,12 @@ GENDER_CHOICES = (
 ROLE_CHOICES = (
     ('admin', 'admin'),
     ('doctor', 'doctor'),
-    ('receptionist', 'receptionist'),
+    ('staff', 'staff'),
+    ('patient', 'patient'),
 )
+
+class Specialization(CommonInfo):
+    name = models.CharField(max_length=254)
 
 class UserAccount(AbstractUser):
     email = models.EmailField(unique=True)
@@ -47,6 +51,7 @@ class UserAccount(AbstractUser):
     date_of_birth = models.DateField(null=True, blank=True)
     staff_id = models.CharField(max_length=50, null=True, blank=True)
     id_no = models.PositiveIntegerField(null=True, blank=True)
+    specializations = models.ManyToManyField(Specialization, related_name='doctors', blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name',]
