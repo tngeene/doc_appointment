@@ -17,7 +17,7 @@ class DoctorListAPIView(CSRFExemptMixin, ListAPIView):
     queryset = User.objects.filter(role='doctor', is_available=True)
 
     def get_queryset(self):
-        if 'department' in self.request.query_params:
+        if 'department' in self.request.query_params and self.request.query_params.get('department'):
             department_id = self.request.query_params.get('department')
             departmental_doctors = User.objects.filter(
                 department_id=department_id, role='doctor', is_available=True).order_by('first_name')

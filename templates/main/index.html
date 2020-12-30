@@ -215,6 +215,7 @@
         </div>
 
         <form action="" method="post" role="form" class="php-email-form" id="appoinment-form">
+          {% csrf_token %}
           {% if request.user.is_anonymous %}
           <div class="form-row">
             <div class="col-md-4 form-group">

@@ -1,6 +1,13 @@
+{% load static %}
 <div class="col-lg-6">
     <div class="member d-flex align-items-start">
-      <div class="pic"><img src="{{doctor.photo.url}}" class="img-fluid" alt="{{doctor.get_full_name}}"></div>
+      <div class="pic">
+      {% if doctor.photo %}
+      <img src="{{ doctor.photo.url }}" class="img-fluid" alt="{{doctor.get_full_name}}">
+      {% else %}
+      <img src="{% static 'dashboard/img/user_icon.png' %}" class="img-fluid" alt="{{doctor.get_full_name}}">
+      {% endif %}
+      </div>
       <div class="member-info">
         <h4>{{doctor.get_full_name}}</h4>
         <span>{{doctor.department}}</span>
