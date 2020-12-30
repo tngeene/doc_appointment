@@ -1,8 +1,17 @@
 <li class="nav-item">
+    {% if department == departments|first %}
   <a
     class="nav-link active show"
     data-toggle="tab"
     href="#{{department.name}}-{{department.id}}"
     >{{department.name}}</a
   >
+  {% else %}
+  <a
+  class="nav-link"
+  data-toggle="tab"
+  href="#{{department.name}}-{{department.id}}"
+  >{{department.name}}</a
+>
+  {% endif %}
 </li>

@@ -59,6 +59,9 @@ class Department(CommonInfo):
     def __str__(self) -> str:
         return self.name
 
+    class Meta:
+        ordering = ('name',)
+
 class UserAccount(AbstractUser):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=50)
@@ -73,6 +76,7 @@ class UserAccount(AbstractUser):
     specializations = models.ManyToManyField(Specialization, related_name='doctors', blank=True)
     is_available = models.BooleanField(default=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True, related_name='users')
+    bio = models.TextField(default='Aut maiores voluptates amet et quis praesentium qui senda para')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name',]
