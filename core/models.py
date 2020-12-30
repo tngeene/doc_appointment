@@ -26,8 +26,11 @@ class Event(CommonInfo):
 class Appointment(CommonInfo):
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='appointments', null=True, blank=True)
     doctor = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'role': 'doctor'}, related_name='appointments_requested', blank=True, null=True)
-    patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments_made')
+    patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments_made', null=True, blank=True)
     date = models.DateTimeField()
+    name = models.CharField(max_length=255, null=True, blank=True)
+    phone = models.CharField(max_length=255, null=True, blank=True)
+    email = models.EmailField(max_length=255, null=True, blank=True)
     is_confirmed = models.BooleanField(default=False)
     confirmed_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments_confirmed', blank=True, null=True)
 

@@ -237,18 +237,12 @@
             <div class="col-md-4 form-group">
               <select name="department" id="department" class="form-control">
                 <option value="">Select Department</option>
-                <option value="Department 1">Department 1</option>
-                <option value="Department 2">Department 2</option>
-                <option value="Department 3">Department 3</option>
               </select>
               <div class="validate"></div>
             </div>
             <div class="col-md-4 form-group">
               <select name="doctor" id="doctor" class="form-control">
                 <option value="">Select Doctor</option>
-                <option value="Doctor 1">Doctor 1</option>
-                <option value="Doctor 2">Doctor 2</option>
-                <option value="Doctor 3">Doctor 3</option>
               </select>
               <div class="validate"></div>
             </div>
@@ -602,3 +596,55 @@
 
   </main><!-- End #main -->
 {% endblock body %}
+
+{% block scripts %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  const getDepartments = async() => {
+    try {
+      await axios.get('users/departments/').then((response) => {
+      if(response.status === 200){
+        response.data.forEach(department => {
+          value = department.id
+          text = department.name
+          $('#department').append(`<option value="${value}"> 
+                                       ${text} 
+                                  </option>`); 
+        });
+      }
+    })
+    } catch(err){
+      console.log(err)
+    }
+  };
+
+  const getDoctors = async(department) => {
+    $('#doctor').find('option')
+    .remove()
+    .end()
+    .append('<option value="">Select Doctor</option>')
+    try {
+      await axios.get(`users/doctors/?department=${department}`).then((response) => {
+      if(response.status === 200){
+        response.data.forEach(doctor => {
+          value = doctor.id
+          text = `${doctor.first_name} ${doctor.last_name}`
+          $('#doctor').append(`<option value="${value}"> 
+                                       ${text} 
+                                  </option>`); 
+        });
+      }
+    })
+    } catch(err){
+      console.log(err)
+    }
+  };
+
+  $(document).ready(function(){
+    getDepartments()
+    $('#department').on('change', function() {
+      getDoctors(this.value)
+    });
+  });
+</script>
+{% endblock %}
