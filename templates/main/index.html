@@ -214,10 +214,11 @@
           <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
         </div>
 
-        <form action="forms/appointment.php" method="post" role="form" class="php-email-form">
+        <form action="" method="post" role="form" class="php-email-form" id="appoinment-form">
+          {% if request.user.is_anonymous %}
           <div class="form-row">
             <div class="col-md-4 form-group">
-              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-msg="Please enter at least 4 chars">
               <div class="validate"></div>
             </div>
             <div class="col-md-4 form-group">
@@ -225,13 +226,14 @@
               <div class="validate"></div>
             </div>
             <div class="col-md-4 form-group">
-              <input type="tel" class="form-control" name="phone" id="phone" placeholder="Your Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+              <input type="tel" class="form-control" name="phone" id="phone" placeholder="Your Phone" data-msg="Please enter at least 4 chars">
               <div class="validate"></div>
             </div>
           </div>
+          {% endif %}
           <div class="form-row">
             <div class="col-md-4 form-group">
-              <input type="datetime" name="date" class="form-control datepicker" id="date" placeholder="Appointment Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+              <input type="datetime" name="date" class="form-control datepicker" id="date" placeholder="Appointment Date" required data-msg="Please enter at least 4 chars">
               <div class="validate"></div>
             </div>
             <div class="col-md-4 form-group">
@@ -241,7 +243,7 @@
               <div class="validate"></div>
             </div>
             <div class="col-md-4 form-group">
-              <select name="doctor" id="doctor" class="form-control">
+              <select name="doctor" id="doctor" class="form-control" required>
                 <option value="">Select Doctor</option>
               </select>
               <div class="validate"></div>
@@ -249,7 +251,7 @@
           </div>
 
           <div class="form-group">
-            <textarea class="form-control" name="message" rows="5" placeholder="Message (Optional)"></textarea>
+            <textarea class="form-control" name="message" id="message" rows="5" required placeholder="Message"></textarea>
             <div class="validate"></div>
           </div>
           <div class="mb-3">
@@ -599,52 +601,5 @@
 
 {% block scripts %}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-  const getDepartments = async() => {
-    try {
-      await axios.get('users/departments/').then((response) => {
-      if(response.status === 200){
-        response.data.forEach(department => {
-          value = department.id
-          text = department.name
-          $('#department').append(`<option value="${value}"> 
-                                       ${text} 
-                                  </option>`); 
-        });
-      }
-    })
-    } catch(err){
-      console.log(err)
-    }
-  };
-
-  const getDoctors = async(department) => {
-    $('#doctor').find('option')
-    .remove()
-    .end()
-    .append('<option value="">Select Doctor</option>')
-    try {
-      await axios.get(`users/doctors/?department=${department}`).then((response) => {
-      if(response.status === 200){
-        response.data.forEach(doctor => {
-          value = doctor.id
-          text = `${doctor.first_name} ${doctor.last_name}`
-          $('#doctor').append(`<option value="${value}"> 
-                                       ${text} 
-                                  </option>`); 
-        });
-      }
-    })
-    } catch(err){
-      console.log(err)
-    }
-  };
-
-  $(document).ready(function(){
-    getDepartments()
-    $('#department').on('change', function() {
-      getDoctors(this.value)
-    });
-  });
-</script>
+<script src="{% static 'home/assets/js/appointmentForm.js' %}"></script>
 {% endblock %}

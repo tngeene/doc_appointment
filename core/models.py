@@ -31,11 +31,12 @@ class Appointment(CommonInfo):
     name = models.CharField(max_length=255, null=True, blank=True)
     phone = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(max_length=255, null=True, blank=True)
+    message = models.TextField(default='-')
     is_confirmed = models.BooleanField(default=False)
     confirmed_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments_confirmed', blank=True, null=True)
 
     def __str__(self) -> str:
-        return f'Appointment by {self.patient.get_full_name()} on {self.date}'
+        return f'Appointment by {self.name} on {self.date}'
 
 
 
