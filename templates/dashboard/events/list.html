@@ -1,0 +1,71 @@
+{% extends 'dashboard/base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block title %}
+All Events
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'dashboard/css/dataTables.bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="text-center py-3">All Events</h3>
+                <div class="float-right mb-2">
+                    <a href="{% url 'dashboard:events:event_add' %}">
+                        <button class="btn btn-primary btn-sm">Add New Event</button>
+                    </a>
+                </div>
+                <div class="table-responsive">
+                  <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
+                      <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Added</th>
+                            <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for event in events %}
+                        <tr>
+                            <td> {{ event.name }}</td>
+                            <td> {{ description.phone_number|truncatechars:15 }}</td>
+                            <td> {{ event.date }}</td>
+                            <td> {{ event.created_at }}</td>
+                            <td>
+                                <a href="{% url 'dashboard:events:event_details' event.pk %}">
+                                    <button class="btn btn-primary btn-sm">View</button>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{%  static 'dashboard/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'dashboard/js/jquery.dataTables.min.js' %}"></script>
+<!--init datatable-->
+<script>
+    $(document).ready(function () {
+        $('#data_table').DataTable({
+            "pageLength": 25,
+            "order": [],
+        });
+    });
+</script>
+{% endblock %}

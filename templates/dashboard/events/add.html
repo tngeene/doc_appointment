@@ -1,0 +1,24 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+    Add Event
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="text-center py-3">Add Event</h3>
+                    <form method="POST" class="form-area" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'partials/forms/form.html' %}
+                        <div class="text-center">
+                            <button class="btn btn-primary" type="submit">Add Event</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
