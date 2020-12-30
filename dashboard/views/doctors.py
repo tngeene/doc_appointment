@@ -16,7 +16,7 @@ class DoctorCreateView(DashboardView, CreateView):
     model = User
     template_name = 'dashboard/users/doctors/add.html'
     fields = ('first_name', 'last_name', 'email',
-              'phone_number', 'gender', 'id_no', 'staff_id', )
+              'phone_number', 'gender', 'department', 'id_no', 'staff_id', )
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         random_password = get_random_string()
@@ -49,10 +49,10 @@ class DoctorDetailView(DashboardView, DetailView):
     def get_context_data(self, **kwargs):
         user_id = self.object.id
         context = super().get_context_data(**kwargs)
-        context["apppointments_requested"] = Appointment.objects.filter(doctor=user_id)
-        context["apppointments_pending"] = Appointment.objects.filter(doctor=user_id, is_confirmed=False)
-        context["apppointments_confirmed"] = Appointment.objects.filter(doctor=user_id, is_confirmed=True)
+        context["apppointments_requested"] = Appointment.objects.filter(
+            doctor=user_id)
+        context["apppointments_pending"] = Appointment.objects.filter(
+            doctor=user_id, is_confirmed=False)
+        context["apppointments_confirmed"] = Appointment.objects.filter(
+            doctor=user_id, is_confirmed=True)
         return context
-    
-
-

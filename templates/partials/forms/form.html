@@ -1,10 +1,8 @@
-
 {% load widget_tweaks %}
-
 {% for hidden_field in form.hidden_fields %}
     {{ hidden_field }}
 {% endfor %}
-
+{{ form.media }}
 {% if form.non_field_errors %}
     <div class="alert alert-danger" role="alert">
         {% for error in form.non_field_errors %}
@@ -13,52 +11,26 @@
     </div>
 {% endif %}
 
+<div class="row">
 {% for field in form.visible_fields %}
-    <div class="{% if field.name == 'date' %}input-group date my-4{% else %}form-group{% endif %}"
-         {% if field.name == 'date' %}id="date-time-picker" data-target-input="nearest"{% endif %}>
 
-        {% if field.name != 'date' %}
-            {{ field.label_tag }}
-            <span class='text-danger'>{% if field.field.required %}*{% endif %}</span>
-        {% endif %}
+    <div class="form-group col-12">
+        {% render_field field.label_tag %}
+        <span class='text-danger'>{% if field.field.required %}*{% endif %}</span>
 
         {% if form.is_bound %}
             {% if field.errors %}
-                {% if field.name == 'date' %}
-                    <label for="date" class="mr-3">Date:</label>
-                    {% render_field field class="form-control datetimepicker-input is-invalid" data-target="#date-time-picker" %}
-                    <div class="input-group-append" data-target="#date-time-picker" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                {% else %}
-                    {% render_field field class="form-control is-invalid" %}
-                {% endif %}
+                {% render_field field class="form-control is-invalid" %}
                 {% for error in field.errors %}
                     <div class="invalid-feedback">
                         {{ error }}
                     </div>
                 {% endfor %}
             {% else %}
-                {% if field.name == 'date' %}
-                    <label for="date" class="mr-3">Date:</label>
-                    {% render_field field class="form-control datetimepicker-input" data-target="#date-time-picker" %}
-                    <div class="input-group-append" data-target="#date-time-picker" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                {% else %}
-                    {% render_field field class="form-control is-valid" %}
-                {% endif %}
+                {% render_field field class="form-control is-valid" %}
             {% endif %}
         {% else %}
-            {% if field.name == 'date' %}
-                <label for="date" class="mr-3">Date:</label>
-                {% render_field field class="form-control datetimepicker-input" data-target="#date-time-picker" %}
-                <div class="input-group-append" data-target="#date-time-picker" data-toggle="datetimepicker">
-                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                </div>
-            {% else %}
-                {% render_field field class="form-control" %}
-            {% endif %}
+            {% render_field field class="form-control" %}
         {% endif %}
 
         {% if field.help_text %}
@@ -66,3 +38,4 @@
         {% endif %}
     </div>
 {% endfor %}
+</div>

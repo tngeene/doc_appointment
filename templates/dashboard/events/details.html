@@ -1,0 +1,103 @@
+{% extends 'dashboard/base.html' %} {% load static %} {% block title %} Event Details
+{% endblock %} {% block styles %}
+<link href="{% static 'dashboard/css/data-tables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card card-event">
+                            <div class="card-body">
+                                <p class="card-text">
+                                <div class="author">
+                                    <div class="block block-one"></div>
+                                    <div class="block block-two"></div>
+                                    <div class="block block-three"></div>
+                                    <div class="block block-four"></div>
+                                    <a href="javascript:void(0)">
+                                        <div class="mb-3">
+                                            {% if not event.photo %}
+                                            <img src="{% static 'dashboard/img/event_icon.png' %}"
+                                                alt="{{ event.get_full_name }}">
+                                            {% else %}
+                                            <img src="{{ event.photo.url }}" alt="{{ event.get_full_name }}"
+                                                class="rounded-circle">
+                                            {% endif %}
+                                        </div>
+                                        <h5 class="title">{{ event.get_full_name }}</h5>
+                                    </a>
+                                    <p class="description">
+                                        {{ event.department.name }}
+                                    </p>
+                                </div>
+                                </p>
+                                <div class="card-description text-center">
+                                    {% if event.is_available %}
+                                    <span class="badge badge-pill badge-success">Available</span>
+                                    {% else %}
+                                    <span class="badge badge-pill badge-danger">Unavailable</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="m-3 p-3 shadow-sm">
+                            <h3 class="text-center py-3">Event Details</h3>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <th>Name</th>
+                                            <td>{{ event.name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Venue</th>
+                                            <td>{{ event.venue }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Date</th>
+                                            <td>{{ event.date }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Attendees</th>
+                                            <td>{{ event.attendeed.count }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Uploaded On</th>
+                                            <td>{{ event.created_at }} </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Uploaded By</th>
+                                            <td> {{ event.created_by.get_full_name }} </td>
+                                        </tr>
+                                        <tr>
+                                            <th>About</th>
+                                            <td>{{ event.description }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="text-center py-3">
+                                    <a href="{% url 'dashboard:events:event_update' event.pk %}" class="mx-1">
+                                        <button class="btn btn-primary mt-3">Edit</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block scripts %}
+<script src="{% static 'dashboard/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'dashboard/js/dataTables.bootstrap4.min.js' %}"></script>
+<script>
+    $("#data-table").DataTable();
+</script>
+{% endblock %}

@@ -35,6 +35,8 @@ INSTALLED_APPS = [
      # 3rd party libs
     'allauth',
     'allauth.account',
+    'bootstrap4',
+    'bootstrap_datepicker_plus',
     'widget_tweaks',
 
     # internal apps
@@ -144,4 +146,8 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'success',
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
+}
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
 }
