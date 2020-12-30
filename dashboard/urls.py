@@ -4,6 +4,7 @@ app_name = "dashboard"
 
 urlpatterns = [
     path('', include('dashboard.routes.index')),
+    path('doctors/', include('dashboard.routes.doctors')),
 ]
 
 

@@ -14,7 +14,7 @@
             <div class="card card-chart">
               <div class="card-header">
                 <h5 class="card-category">Doctors</h5>
-                <h3 class="card-title"><i class="tim-icons icon-single-02 text-info"></i>0</h3>
+                <h3 class="card-title"><i class="tim-icons icon-single-02 text-info"></i>{{doctors_count}}</h3>
               </div>
             </div>
           </div>
@@ -39,131 +39,48 @@
           <div class="col-md-12">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title">Appointments</h4>
+                <h4 class="card-title">Recent Doctors</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table tablesorter " id="">
                     <thead class=" text-primary">
                       <tr>
-                        <th>
-                          Name
-                        </th>
-                        <th>
-                          Country
-                        </th>
-                        <th>
-                          City
-                        </th>
-                        <th class="text-center">
-                          Salary
-                        </th>
-                        <th class="text-center">
-                          Action
-                        </th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Contact</th>
+                            <th>Email Address</th>
+                            <th>Added</th>
+                            <th>Last Login</th>
+                            <th>Status</th>
+                            <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          Dakota Rice
-                        </td>
-                        <td>
-                          Niger
-                        </td>
-                        <td>
-                          Oud-Turnhout
-                        </td>
-                        <td class="text-center">
-                          $36,738
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Minerva Hooper
-                        </td>
-                        <td>
-                          Curaçao
-                        </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-center">
-                          $23,789
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Sage Rodriguez
-                        </td>
-                        <td>
-                          Netherlands
-                        </td>
-                        <td>
-                          Baileux
-                        </td>
-                        <td class="text-center">
-                          $56,142
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Philip Chaney
-                        </td>
-                        <td>
-                          Korea, South
-                        </td>
-                        <td>
-                          Overland Park
-                        </td>
-                        <td class="text-center">
-                          $38,735
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Doris Greene
-                        </td>
-                        <td>
-                          Malawi
-                        </td>
-                        <td>
-                          Feldkirchen in Kärnten
-                        </td>
-                        <td class="text-center">
-                          $63,542
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Mason Porter
-                        </td>
-                        <td>
-                          Chile
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-center">
-                          $78,615
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Jon Porter
-                        </td>
-                        <td>
-                          Portugal
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-center">
-                          $98,615
-                        </td>
-                        <td class="text-center">
-                          <button class="btn btn-sm btn-secondary">View</button>
-                        </td>
+                      {% for doctor in recent_doctors %}
+                        <tr>
+                            <td>{{ doctor.first_name }} </td>
+                            <td> {{ doctor.last_name }}</td>
+                            <td> {{ doctor.phone_number }}</td>
+                            <td>{{ doctor.email }}</td>
+                            <td> {{ doctor.date_joined }}</td>
+                            <td> {{ doctor.last_login }}</td>
+                            {% if doctor.is_active %}
+                            <td>
+                                <span class="badge badge-pill badge-success">Active</span>
+                            </td>
+                            {% else %}
+                            <td>
+                                <span class="badge badge-pill badge-danger">Inactive</span>
+                            </td>
+                            {% endif %}
+                            <td>
+                                <a href="{% url 'dashboard:doctors:doctor_details' doctor.pk %}">
+                                    <button class="btn btn-primary btn-sm">View</button>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
                       </tr>
                     </tbody>
                   </table>
