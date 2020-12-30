@@ -1,0 +1,21 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}
+    Confirm Suspension
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="text-center card-body">
+                    <h4 class="py-3">Suspend</h4>
+                        <p>Are you sure you want to suspend {{ user.get_full_name }}?</p>
+                        <a href="{% url 'dashboard:index:user_suspend_action' user.pk %}" class="mx-1">
+                                                <button class="btn btn-danger">Suspend</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

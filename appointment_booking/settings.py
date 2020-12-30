@@ -13,7 +13,7 @@ from django.contrib.messages import constants as messages
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG')
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['*']
 FRONTEND_HOST = config('FRONTEND_HOST')
@@ -35,6 +35,8 @@ INSTALLED_APPS = [
      # 3rd party libs
     'allauth',
     'allauth.account',
+    'bootstrap4',
+    'bootstrap_datepicker_plus',
     'widget_tweaks',
 
     # internal apps
@@ -144,4 +146,8 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'success',
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
+}
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
 }

@@ -1,16 +1,22 @@
 <div class="sidebar">
   <div class="sidebar-wrapper">
     <ul class="nav">
-      <li class="active ">
-        <a href="./dashboard.html">
+      <li class="{% if '/admin' in request.path %}active{% endif %}">
+        <a href="{% url 'dashboard:index:index' %}">
           <i class="tim-icons icon-chart-pie-36"></i>
           <p>Dashboard</p>
         </a>
       </li>
-      <li>
-        <a href="./icons.html">
+      <li class="{% if '/doctors' in request.path %}active{% endif %}">
+        <a href="{% url 'dashboard:doctors:doctors_list' %}" class="{% if '/doctors' in request.path %}active{% endif %}">
           <i class="tim-icons icon-single-02"></i>
           <p>Doctors</p>
+        </a>
+      </li>
+      <li class="{% if '/patients' in request.path %}active{% endif %}">
+        <a href="{% url 'dashboard:patients:patients_list' %}">
+          <i class="tim-icons icon-badge"></i>
+          <p>Patients</p>
         </a>
       </li>
       <li>
@@ -25,14 +31,8 @@
           <p>Appointments</p>
         </a>
       </li>
-      <li>
-        <a href="./user.html">
-          <i class="tim-icons icon-badge"></i>
-          <p>Patients</p>
-        </a>
-      </li>
-      <li>
-        <a href="./user.html">
+      <li class="{% if '/events' in request.path %}active{% endif %}">
+        <a href="{% url 'dashboard:events:events_list' %}">
           <i class="tim-icons icon-send"></i>
           <p>Events/News</p>
         </a>

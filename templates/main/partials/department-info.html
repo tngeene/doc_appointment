@@ -1,0 +1,33 @@
+{% if department == departments|first %}
+<div class="tab-pane active show" id="{{department.name}}-{{department.id}}">
+  <div class="row">
+    <div class="col-lg-8 details order-2 order-lg-1">
+      <h3>{{department.name}}</h3>
+      <p class="font-italic">{{department.description}}</p>
+    </div>
+    <div class="col-lg-4 text-center order-1 order-lg-2">
+      <img
+        src="{{department.cover_photo.url}}"
+        alt="{{department.name}}"
+        class="img-fluid"
+      />
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="tab-pane" id="{{department.name}}-{{department.id}}">
+  <div class="row">
+    <div class="col-lg-8 details order-2 order-lg-1">
+      <h3>{{department.name}}</h3>
+      <p class="font-italic">{{department.description}}</p>
+    </div>
+    <div class="col-lg-4 text-center order-1 order-lg-2">
+      <img
+        src="{{department.cover_photo.url}}"
+        alt="{{department.name}}"
+        class="img-fluid"
+      />
+    </div>
+  </div>
+</div>
+{% endif %}

@@ -5,7 +5,14 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from core.models import CommonInfo
+# from core.models import CommonInfo
+
+class CommonInfo(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_update = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
 
 class UserAccountManager(UserManager):
     def create_user(self, username=None, email=None, password=None, **extra_fields):
@@ -39,6 +46,21 @@ ROLE_CHOICES = (
 
 class Specialization(CommonInfo):
     name = models.CharField(max_length=254)
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_update = models.DateTimeField(auto_now=True)
+
+class Department(CommonInfo):
+    name = models.CharField(max_length=254)
+    description = models.TextField()
+    cover_photo = models.ImageField(upload_to="departments/cover_photos/")
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_update = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.name
+
+    class Meta:
+        ordering = ('name',)
 
 class UserAccount(AbstractUser):
     email = models.EmailField(unique=True)
@@ -52,6 +74,9 @@ class UserAccount(AbstractUser):
     staff_id = models.CharField(max_length=50, null=True, blank=True)
     id_no = models.PositiveIntegerField(null=True, blank=True)
     specializations = models.ManyToManyField(Specialization, related_name='doctors', blank=True)
+    is_available = models.BooleanField(default=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True, related_name='users')
+    bio = models.TextField(default='Aut maiores voluptates amet et quis praesentium qui senda para')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name',]
