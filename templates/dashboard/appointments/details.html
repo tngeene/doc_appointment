@@ -1,0 +1,77 @@
+{% extends 'dashboard/base.html' %} {% load static %} {% block title %} Appointment Details
+{% endblock %} {% block styles %}
+<link href="{% static 'dashboard/css/data-tables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-10 mx-auto">
+                        <div class="m-3 p-3 shadow-sm">
+                            <h3 class="text-center py-3">Appointment Details</h3>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <th>Patient</th>
+                                            {% if appointment.patient %}
+                                            <td><a href = {% url 'dashboard:patients:patient_details' appointment.patient.pk %}> {{ appointment.name }}</a></td>
+                                            {% else %}
+                                            <td>{{ appointment.name }}</td>
+                                            {% endif %}
+                                        </tr>
+                                        <tr>
+                                            <th>Department</th>
+                                            <td>{{appointment.department.name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Doctor</th>
+                                            <td><a href = {% url 'dashboard:doctors:doctor_details' appointment.doctor.pk %}> {{ appointment.doctor.get_full_name }}</a></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Date</th>
+                                            <td>{{ appointment.date }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Uploaded On</th>
+                                            <td>{{ appointment.created_at }} </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Message</th>
+                                            <td>{{ appointment.message }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Status</th>
+                                            <td>
+                                                {% if appointment.is_confirmed %}
+                                                <span class="badge badge-pill badge-success">Confirmed</span>
+                                                {% else %}
+                                                <span class="badge badge-pill badge-danger">Pending</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                {% comment %} <div class="text-center py-3">
+                                    <a href="{% url 'dashboard:appointments:appointment_update' appointment.pk %}" class="mx-1">
+                                        <button class="btn btn-primary mt-3">Edit</button>
+                                    </a>
+                                </div> {% endcomment %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block scripts %}
+<script src="{% static 'dashboard/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'dashboard/js/dataTables.bootstrap4.min.js' %}"></script>
+<script>
+    $("#data-table").DataTable();
+</script>
+{% endblock %}

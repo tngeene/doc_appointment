@@ -7,6 +7,12 @@
           <p>Dashboard</p>
         </a>
       </li>
+      <li class="{% if '/departments' in request.path %}active{% endif %}">
+        <a href="{% url 'dashboard:departments:departments_list' %}" class="{% if '/departments' in request.path %}active{% endif %}">
+          <i class="tim-icons icon-bullet-list-67"></i>
+          <p>Departments</p>
+        </a>
+      </li>
       <li class="{% if '/doctors' in request.path %}active{% endif %}">
         <a href="{% url 'dashboard:doctors:doctors_list' %}" class="{% if '/doctors' in request.path %}active{% endif %}">
           <i class="tim-icons icon-single-02"></i>
@@ -25,9 +31,9 @@
           <p>Receptionists</p>
         </a>
       </li>
-      <li>
-        <a href="./notifications.html">
-          <i class="tim-icons icon-notes"></i>
+      <li class="{% if '/appointments' in request.path %}active{% endif %}">
+        <a href="{% url 'dashboard:appointments:appointments_list' %}">
+          <i class="tim-icons icon-calendar-60"></i>
           <p>Appointments</p>
         </a>
       </li>

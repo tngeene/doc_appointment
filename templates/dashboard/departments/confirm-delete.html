@@ -1,0 +1,24 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}
+    Confirm Delete
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="text-center card-body">
+                    <h4 class="py-3">Delete Department</h4>
+                        <p class="text-capitalize">Are you sure you want to Delete {{ department.name }}?</p>
+                        <form method="post">
+                        {% csrf_token %}
+                        {% comment %} <a href="{% url 'dashboard:departments:department_delete' department.pk %}" class="mx-1"> {% endcomment %}
+                                                <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

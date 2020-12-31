@@ -69,7 +69,7 @@
                                         {% if user.department %}
                                         <tr>
                                             <th>Department</th>
-                                            <td>{{ user.department.name }}</td>
+                                            <td><a href="{% url 'dashboard:departments:department_details' user.department.pk %}" >{{ user.department.name }}</a></td>
                                         </tr>
                                         {% endif %}
                                         <tr>
