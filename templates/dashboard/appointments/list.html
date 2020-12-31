@@ -1,0 +1,76 @@
+{% extends 'dashboard/base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block title %}
+All Appointments
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'dashboard/css/dataTables.bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="text-center py-3">All Appointments</h3>
+                <div class="table-responsive">
+                 <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
+                      <tr>
+                            <th>Patient</th>
+                            <th>Department</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for appointment in appointments %}
+                        <tr>
+                            <td> {{ appointment.name }}</td>
+                            <td> {{ appointment.department.name}}</td>
+                            <td> {{ appointment.doctor.get_full_name }}</td>
+                            <td> {{ appointment.date }}</td>
+                            {% if appointment.is_confirmed %}
+                            <td>
+                                <span class="badge badge-pill badge-success">Confirmed</span>
+                            </td>
+                            {% else %}
+                            <td>
+                                <span class="badge badge-pill badge-danger">Pending</span>
+                            </td>
+                            {% endif %}
+                            <td>
+                                <a href="{% url 'dashboard:appointments:appointment_details' appointment.pk %}">
+                                    <button class="btn btn-primary btn-sm">View</button>
+                                </a> 
+                            </td>
+                        </tr>
+                        {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{%  static 'dashboard/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'dashboard/js/jquery.dataTables.min.js' %}"></script>
+<!--init datatable-->
+<script>
+    $(document).ready(function () {
+        $('#data_table').DataTable({
+            "pageLength": 25,
+            "order": [],
+        });
+    });
+</script>
+{% endblock %}

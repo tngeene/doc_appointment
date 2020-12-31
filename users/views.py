@@ -1,5 +1,9 @@
+from allauth.account.views import LoginView
 from core.mixins import CSRFExemptMixin
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, logout
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
 
@@ -24,7 +28,25 @@ class DoctorListAPIView(CSRFExemptMixin, ListAPIView):
             return departmental_doctors
         return super().get_queryset()
 
+
 class DepartmentListAPIView(CSRFExemptMixin, ListAPIView):
     serializer_class = DepartmentSerializer
     permission_classes = [AllowAny]
     queryset = Department.objects.all()
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('home:homepage')
+
+
+def login_redirect(request):
+    if request.user.role == 'admin':
+        return redirect('dashboard:index:index')
+    else:
+        return redirect('home:homepage')
+
+
+class LoginUserView(LoginView):
+    def get_success_url(self):
+        return reverse_lazy('login_redirect')

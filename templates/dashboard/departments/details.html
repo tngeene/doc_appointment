@@ -1,0 +1,138 @@
+{% extends 'dashboard/base.html' %} {% load static %} {% block title %} department Details
+{% endblock %} {% block styles %}
+<link href="{% static 'dashboard/css/data-tables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card card-event">
+                            <div class="card-body">
+                                <p class="card-text">
+                                <div class="author">
+                                    <div class="block block-one"></div>
+                                    <div class="block block-two"></div>
+                                    <div class="block block-three"></div>
+                                    <div class="block block-four"></div>
+                                    <a href="javascript:void(0)">
+                                        <div class="mb-3 text-center">
+                                            {% if not department.cover_photo %}
+                                            <img src="{% static 'dashboard/img/department_icon.png' %}"
+                                                alt="{{ department.name }}">
+                                            {% else %}
+                                            <img src="{{ department.cover_photo.url }}" alt="{{ department.name }}"
+                                                class="rounded-circle">
+                                            {% endif %}
+                                            <h5 class="title text-capitalize mt-3">{{ department.name }} Department</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="m-3 p-3 shadow-sm">
+                            <h3 class="text-center py-3">Department Details</h3>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <th>Name</th>
+                                            <td>{{ department.name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Doctors</th>
+                                            <td>{{ doctors.count }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Added On</th>
+                                            <td>{{ department.created_at }} </td>
+                                        </tr>
+                                        <tr>
+                                            <th>About</th>
+                                            <td>{{ department.description }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="text-center py-3">
+                                    <a href="{% url 'dashboard:departments:department_update' department.pk %}" class="mx-1">
+                                        <button class="btn btn-primary mt-3">Edit</button>
+                                    </a>
+                                    <a href="{% url 'dashboard:departments:department_delete' department.pk %}" class="mx-1">
+                                        <button class="btn btn-warning mt-3">Delete</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="text-center text-capitalize py-3">All Doctors in {{department.name}}</h3>
+                <div class="table-responsive">
+                  <table class="table tablesorter " id="data_table">
+                    <thead class=" text-primary">
+                      <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Contact</th>
+                            <th>Email Address</th>
+                            <th>Added</th>
+                            <th>Last Login</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for doctor in doctors %}
+                        <tr>
+                            <td>{{ doctor.first_name }} </td>
+                            <td> {{ doctor.last_name }}</td>
+                            <td> {{ doctor.phone_number }}</td>
+                            <td>{{ doctor.email }}</td>
+                            <td> {{ doctor.date_joined }}</td>
+                            <td> {{ doctor.last_login }}</td>
+                            {% if doctor.is_active %}
+                            <td>
+                                <span class="badge badge-pill badge-success">Active</span>
+                            </td>
+                            {% else %}
+                            <td>
+                                <span class="badge badge-pill badge-danger">Inactive</span>
+                            </td>
+                            {% endif %}
+                            <td>
+                                <a href="{% url 'dashboard:doctors:doctor_details' doctor.pk %}">
+                                    <button class="btn btn-primary btn-sm">View</button>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block scripts %}
+<script src="{% static 'dashboard/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'dashboard/js/dataTables.bootstrap4.min.js' %}"></script>
+<script>
+    $("#data-table").DataTable();
+</script>
+{% endblock %}

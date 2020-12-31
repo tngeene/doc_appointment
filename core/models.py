@@ -22,6 +22,11 @@ class Event(CommonInfo):
         return self.name
 
 
+STATUS_CHOICES = [
+    ('confirmed', 'confirmed'),
+    ('pending', 'pending'),
+    ('declined', 'declined'),
+]
 
 class Appointment(CommonInfo):
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='appointments', null=True, blank=True)
@@ -32,7 +37,7 @@ class Appointment(CommonInfo):
     phone = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(max_length=255, null=True, blank=True)
     message = models.TextField(default='-')
-    is_confirmed = models.BooleanField(default=False)
+    status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='pending')
     confirmed_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments_confirmed', blank=True, null=True)
 
     def __str__(self) -> str:

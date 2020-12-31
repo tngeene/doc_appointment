@@ -168,7 +168,7 @@
                     <tbody>
                       {% for appointment in recent_appointments %}
                         <tr>
-                            <td> {{ appointment.patient.get_full_name }}</td>
+                            <td> {{ appointment.name }}</td>
                             <td> {{ appointment.department.name}}</td>
                             <td> {{ appointment.doctor.get_full_name }}</td>
                             <td> {{ appointment.date }}</td>
@@ -182,10 +182,9 @@
                             </td>
                             {% endif %}
                             <td>
-                                {% comment %} <a href="{% url 'dashboard:appointments:appointment_details' appointment.pk %}">
+                                <a href="{% url 'dashboard:appointments:appointment_details' appointment.pk %}">
                                     <button class="btn btn-primary btn-sm">View</button>
-                                </a> {% endcomment %}
-                            </td>
+                                </a>
                         </tr>
                         {% endfor %}
                       </tr>
