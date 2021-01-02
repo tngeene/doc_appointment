@@ -19,7 +19,7 @@ class DashboardTemplateView(DashboardView, TemplateView):
         appointments = Appointment.objects.all()
         doctors = User.objects.filter(role='doctor')
         events = Event.objects.all()
-        patients = User.objects.filter(role='patients')
+        patients = User.objects.filter(role='patient')
         staff = User.objects.filter(role='staff')
         context = super().get_context_data(**kwargs)
         context["appointments_count"] = appointments.count()

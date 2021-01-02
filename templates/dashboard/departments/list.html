@@ -26,7 +26,7 @@ All Departments
                     <thead class=" text-primary">
                       <tr>
                             <th>Name</th>
-                            <th>Description</th>
+                            <th>About</th>
                             <th>Added</th>
                             <th>Action</th>
                       </tr>
@@ -35,7 +35,7 @@ All Departments
                       {% for department in departments %}
                         <tr>
                             <td> {{ department.name }}</td>
-                            <td> {{ description.phone_number|truncatechars:15 }}</td>
+                            <td> {{ department.description|truncatechars:15 }}</td>
                             <td> {{ department.created_at }}</td>
                             <td>
                                 <a href="{% url 'dashboard:departments:department_details' department.pk %}">
@@ -43,6 +43,10 @@ All Departments
                                 </a>
                             </td>
                         </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Departments Uploaded Yet.</td>
+                            </tr>
                         {% endfor %}
                       </tr>
                     </tbody>

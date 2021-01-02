@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 
 class EventCreateView(DashboardView, CreateView):
     model = Event
-    fields = ('name', 'description', 'date', 'photo')
+    fields = ('name', 'description', 'date', 'venue','photo')
     template_name = 'dashboard/events/add.html'
 
     def form_valid(self, form):
@@ -37,7 +37,7 @@ class EventDetailView(DashboardView, DetailView):
 
 class EventUpdateView(DashboardView, UpdateView):
     model = Event
-    fields = ('name', 'description', 'date', 'photo')
+    fields = ('name', 'description', 'date', 'venue', 'photo')
     template_name = 'dashboard/events/edit.html'
 
     def form_valid(self, form):

@@ -12,6 +12,7 @@ class CommonInfo(models.Model):
 User = get_user_model()
 class Event(CommonInfo):
     name = models.CharField(max_length=254)
+    venue = models.CharField(max_length=254, null=True)
     description = models.TextField()
     photo  = models.ImageField(upload_to="events/photos", null=True, blank=True)
     date = models.DateTimeField()

@@ -65,7 +65,7 @@
                                         </tr>
                                         <tr>
                                             <th>Attendees</th>
-                                            <td>{{ event.attendeed.count }}</td>
+                                            <td>{{ event.attendees.count }}</td>
                                         </tr>
                                         <tr>
                                             <th>Uploaded On</th>
@@ -94,6 +94,71 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="text-center py-3">All Attendees</h3>
+                <div class="table-responsive">
+                  <table class="table tablesorter " id="data_table">
+                    <thead class=" text-primary">
+                      <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Contact</th>
+                            <th>Email Address</th>
+                            <th>Added</th>
+                            <th>Last Login</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for user in event.attendees.alll %}
+                        <tr>
+                            <td>{{ user.first_name }} </td>
+                            <td> {{ user.last_name }}</td>
+                            <td> {{ user.phone_number }}</td>
+                            <td>{{ user.email }}</td>
+                            <td> {{ user.date_joined }}</td>
+                            <td> {{ user.last_login }}</td>
+                            {% if user.is_active %}
+                            <td>
+                                <span class="badge badge-pill badge-success">Active</span>
+                            </td>
+                            {% else %}
+                            <td>
+                                <span class="badge badge-pill badge-danger">Inactive</span>
+                            </td>
+                            {% endif %}
+                            <td>
+                                {% if user.role == 'patient' %}
+                                <a href="{% url 'dashboard:patients:patient_details' user.pk %}">
+                                    <button class="btn btn-primary btn-sm">View</button>
+                                </a>
+                                {% elif user.role == 'doctor' %}
+                                <a href="{% url 'dashboard:doctors:doctor_details' user.pk %}">
+                                    <button class="btn btn-primary btn-sm">View</button>
+                                </a>
+                                {% else %} 
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Registered Patients Yet</td>
+                            </tr>
+                        {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %} {% block scripts %}
 <script src="{% static 'dashboard/js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'dashboard/js/dataTables.bootstrap4.min.js' %}"></script>

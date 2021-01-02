@@ -105,6 +105,265 @@
         </div>
     </div>
 </div>
+
+<div class="row mt-4">
+  <div class="col-md-12  mt-4">
+    {% include 'partials/nav-pills/doctors.html' %}
+  </div>
+  <div class="col-12">
+    <div class="row tab-content">
+      <div class="col-md-12 mb-4 tab-pane fade show active" id="pills-all" role="tabpanel"
+        aria-labelledby="pills-all-tab">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="text-center py-3">All Appointments ({{all_appointments.count}})</h3>
+                <div class="table-responsive">
+                 <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
+                      <tr>
+                            <th>Patient</th>
+                            <th>Department</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for appointment in all_appointments %}
+                        <tr>
+                            <td> {{ appointment.name }}</td>
+                            <td> {{ appointment.department.name}}</td>
+                            <td> {{ appointment.date }}</td>
+                            {% if appointment.status == 'confirmed' %}
+                            <td>
+                                <span class="badge badge-pill badge-success">Confirmed</span>
+                            </td>
+                            {% elif appointment.status == 'pending' %}
+                            <td>
+                                <span class="badge badge-pill badge-info">Pending</span>
+                            </td>
+                            {% elif appointment.status == 'declined' %}
+                            <td>
+                                <span class="badge badge-pill badge-warning">Declined</span>
+                            </td>
+                            {% endif %}
+                            <td>
+                                <a href="{% url 'dashboard:appointments:appointment_details' appointment.pk %}">
+                                    <button class="btn btn-primary btn-sm">View</button>
+                                </a> 
+                            </td>
+                        </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Requested Appointments Yet</td>
+                            </tr>
+                        {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-12 tab-pane fade" id="pills-confirmed" role="tabpanel" aria-labelledby="pills-confirmed-tab">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="text-center py-3">Accepted Appointments ({{confirmed_appointments.count}})</h3>
+                <div class="table-responsive">
+                 <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
+                      <tr>
+                            <th>Patient</th>
+                            <th>Department</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for appointment in confirmed_appointments %}
+                        <tr>
+                            <td> {{ appointment.name }}</td>
+                            <td> {{ appointment.department.name}}</td>
+                            <td> {{ appointment.date }}</td>
+                            {% if appointment.status == 'confirmed' %}
+                            <td>
+                                <span class="badge badge-pill badge-success">Confirmed</span>
+                            </td>
+                            {% elif appointment.status == 'pending' %}
+                            <td>
+                                <span class="badge badge-pill badge-info">Pending</span>
+                            </td>
+                            {% elif appointment.status == 'declined' %}
+                            <td>
+                                <span class="badge badge-pill badge-warning">Declined</span>
+                            </td>
+                            {% endif %}
+                            <td>
+                                <a href="{% url 'dashboard:appointments:appointment_details' appointment.pk %}">
+                                    <button class="btn btn-primary btn-sm">View</button>
+                                </a> 
+                            </td>
+                        </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Accepted Appointments Yet</td>
+                            </tr>
+                        {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-12 tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="text-center py-3">Pending Appointments ({{pending_appointments.count}})</h3>
+                <div class="table-responsive">
+                 <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
+                      <tr>
+                            <th>Patient</th>
+                            <th>Department</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for appointment in pending_appointments %}
+                        <tr>
+                            <td> {{ appointment.name }}</td>
+                            <td> {{ appointment.department.name}}</td>
+                            <td> {{ appointment.date }}</td>
+                            {% if appointment.status == 'confirmed' %}
+                            <td>
+                                <span class="badge badge-pill badge-success">Confirmed</span>
+                            </td>
+                            {% elif appointment.status == 'pending' %}
+                            <td>
+                                <span class="badge badge-pill badge-info">Pending</span>
+                            </td>
+                            {% elif appointment.status == 'declined' %}
+                            <td>
+                                <span class="badge badge-pill badge-warning">Declined</span>
+                            </td>
+                            {% endif %}
+                            <td>
+                                <a href="{% url 'dashboard:appointments:appointment_details' appointment.pk %}">
+                                    <button class="btn btn-primary btn-sm">View</button>
+                                </a> 
+                            </td>
+                        </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Pending Appointments Yet</td>
+                            </tr>
+                        {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-12 tab-pane fade" id="pills-declined" role="tabpanel" aria-labelledby="pills-declined-tab">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="text-center py-3">Declined Appointments ({{ declined_appointments.count }})</h3>
+                <div class="table-responsive">
+                 <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
+                      <tr>
+                            <th>Patient</th>
+                            <th>Department</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for appointment in declined_appointments %}
+                        <tr>
+                            <td> {{ appointment.name }}</td>
+                            <td> {{ appointment.department.name}}</td>
+                            <td> {{ appointment.date }}</td>
+                            {% if appointment.status == 'confirmed' %}
+                            <td>
+                                <span class="badge badge-pill badge-success">Confirmed</span>
+                            </td>
+                            {% elif appointment.status == 'pending' %}
+                            <td>
+                                <span class="badge badge-pill badge-info">Pending</span>
+                            </td>
+                            {% elif appointment.status == 'declined' %}
+                            <td>
+                                <span class="badge badge-pill badge-warning">Declined</span>
+                            </td>
+                            {% endif %}
+                            <td>
+                                <a href="{% url 'dashboard:appointments:appointment_details' appointment.pk %}">
+                                    <button class="btn btn-primary btn-sm">View</button>
+                                </a> 
+                            </td>
+                        </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Declined Appointments Yet</td>
+                            </tr>
+                        {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-12 tab-pane fade" id="pills-events" role="tabpanel" aria-labelledby="pills-events-tab">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="text-center py-3">Events Attending ({{events_attending.count}})</h3>
+                <div class="table-responsive">
+                 <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
+                      <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Added</th>
+                            <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for event in events_attending %}
+                        <tr>
+                            <td> {{ event.name }}</td>
+                            <td> {{ description.phone_number|truncatechars:15 }}</td>
+                            <td> {{ event.date }}</td>
+                            <td> {{ event.created_at }}</td>
+                            <td>
+                                <a href="{% url 'dashboard:events:event_details' event.pk %}">
+                                    <button class="btn btn-primary btn-sm">View</button>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Events attending Yet.</td>
+                            </tr>
+                        {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %} {% block scripts %}
 <script src="{% static 'dashboard/js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'dashboard/js/dataTables.bootstrap4.min.js' %}"></script>

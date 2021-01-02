@@ -46,20 +46,38 @@
                                         <tr>
                                             <th>Status</th>
                                             <td>
-                                                {% if appointment.is_confirmed %}
+                                                {% if appointment.status == 'confirmed' %}
                                                 <span class="badge badge-pill badge-success">Confirmed</span>
-                                                {% else %}
-                                                <span class="badge badge-pill badge-danger">Pending</span>
+                                                {% elif appointment.status == 'pending' %}
+                                                <span class="badge badge-pill badge-info">Pending</span>
+                                                {% elif appointment.status == 'declined' %}
+                                                <span class="badge badge-pill badge-danger">Declined</span>
                                                 {% endif %}
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                {% comment %} <div class="text-center py-3">
-                                    <a href="{% url 'dashboard:appointments:appointment_update' appointment.pk %}" class="mx-1">
+                               <div class="text-center py-3">
+                                    {% comment %} <a href="{% url 'dashboard:appointments:appointment_update' appointment.pk %}" class="mx-1">
                                         <button class="btn btn-primary mt-3">Edit</button>
+                                    </a> {% endcomment %}
+                                    {% if appointment.status == 'pending' %}
+                                    <a href="{% url 'dashboard:appointments:appointment_mark_as_confirmed_action' pk=appointment.pk %}" class="mx-1">
+                                        <button class="btn btn-sm btn-success mt-3">Accept</button>
                                     </a>
-                                </div> {% endcomment %}
+                                    <a href="{% url 'dashboard:appointments:appointment_mark_as_declined_action' pk=appointment.pk %}" class="mx-1">
+                                        <button class="btn btn-sm btn-warning mt-3">Decline</button>
+                                    </a>
+                                    {% elif appointment.status == 'confirmed' %}
+                                    <a href="{% url 'dashboard:appointments:appointment_mark_as_declined_action' pk=appointment.pk %}" class="mx-1">
+                                        <button class="btn btn-sm btn-warning mt-3">Decline</button>
+                                    </a>
+                                    {% elif appointment.status == 'declined' %}
+                                    <a href="{% url 'dashboard:appointments:appointment_mark_as_confirmed_action' pk=appointment.pk %}" class="mx-1">
+                                        <button class="btn btn-sm btn-success mt-3">Accept</button>
+                                    </a>
+                                    {% endif %}
+                                </div> 
                             </div>
                         </div>
                     </div>

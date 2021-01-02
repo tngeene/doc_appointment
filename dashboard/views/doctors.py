@@ -48,11 +48,15 @@ class DoctorDetailView(DashboardView, DetailView):
 
     def get_context_data(self, **kwargs):
         user_id = self.object.id
+        user = User.objects.get(id=user_id)
         context = super().get_context_data(**kwargs)
-        context["apppointments_requested"] = Appointment.objects.filter(
+        context["all_appointments"] = Appointment.objects.filter(
             doctor=user_id)
-        context["apppointments_pending"] = Appointment.objects.filter(
-            doctor=user_id, is_confirmed=False)
-        context["apppointments_confirmed"] = Appointment.objects.filter(
-            doctor=user_id, is_confirmed=True)
+        context["pending_appointments"] = Appointment.objects.filter(
+            doctor=user_id, status='pending')
+        context["confirmed_appointments"] = Appointment.objects.filter(
+            doctor=user_id, status='confirmed')
+        context["declined_appointments"] = Appointment.objects.filter(
+            doctor=user_id, status='declined')
+        context["events_attending"] = user.events_attending.all().order_by('-pk')
         return context
