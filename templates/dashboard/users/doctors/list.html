@@ -59,6 +59,10 @@ All Doctors
                                 </a>
                             </td>
                         </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Doctord Added Yet</td>
+                            </tr>
                         {% endfor %}
                       </tr>
                     </tbody>

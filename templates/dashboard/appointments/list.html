@@ -35,13 +35,17 @@ All Appointments
                             <td> {{ appointment.department.name}}</td>
                             <td> {{ appointment.doctor.get_full_name }}</td>
                             <td> {{ appointment.date }}</td>
-                            {% if appointment.is_confirmed %}
+                            {% if appointment.status == 'confirmed' %}
                             <td>
                                 <span class="badge badge-pill badge-success">Confirmed</span>
                             </td>
-                            {% else %}
+                            {% elif appointment.status == 'pending' %}
                             <td>
-                                <span class="badge badge-pill badge-danger">Pending</span>
+                                <span class="badge badge-pill badge-info">Pending</span>
+                            </td>
+                            {% elif appointment.status == 'declined' %}
+                            <td>
+                                <span class="badge badge-pill badge-warning">Declined</span>
                             </td>
                             {% endif %}
                             <td>
@@ -50,6 +54,10 @@ All Appointments
                                 </a> 
                             </td>
                         </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Appointments Requested Yet.</td>
+                            </tr>
                         {% endfor %}
                       </tr>
                     </tbody>

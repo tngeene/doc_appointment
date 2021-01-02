@@ -51,9 +51,13 @@ class PatientDetailView(DashboardView, DetailView):
         user = User.objects.get(id=user_id)
         context = super().get_context_data(**kwargs)
 
-        context["appointments_confirmed"] = Appointment.objects.filter(
-            patient=user_id, is_confirmed=True).order_by('-pk')
-        context["appointments_declined"] = Appointment.objects.filter(
-            patient=user_id, is_confirmed=False).order_by('-pk')
+        context["all_appointments"] = Appointment.objects.filter(
+            patient=user_id)
+        context["pending_appointments"] = Appointment.objects.filter(
+            patient=user_id, status='pending')
+        context["confirmed_appointments"] = Appointment.objects.filter(
+            patient=user_id, status='confirmed')
+        context["declined_appointments"] = Appointment.objects.filter(
+            patient=user_id, status='declined')
         context["events_attending"] = user.events_attending.all().order_by('-pk')
         return context

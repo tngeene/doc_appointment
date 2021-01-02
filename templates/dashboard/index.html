@@ -82,6 +82,10 @@
                                 </a>
                             </td>
                         </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Doctors Registered Yet.</td>
+                            </tr>
                         {% endfor %}
                       </tr>
                     </tbody>
@@ -136,6 +140,10 @@
                                 </a>
                             </td>
                         </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Patients Registered Yet.</td>
+                            </tr>
                         {% endfor %}
                       </tr>
                     </tbody>
@@ -186,6 +194,10 @@
                                     <button class="btn btn-primary btn-sm">View</button>
                                 </a>
                         </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Appointments Requested Yet.</td>
+                            </tr>
                         {% endfor %}
                       </tr>
                     </tbody>
@@ -226,6 +238,10 @@
                                 </a>
                             </td>
                         </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Events Uploaded Yet.</td>
+                            </tr>
                         {% endfor %}
                       </tr>
                     </tbody>

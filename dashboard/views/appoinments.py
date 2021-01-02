@@ -1,6 +1,5 @@
 from django.views.generic import ListView, UpdateView, DetailView
 from core.models import Appointment
-
 from .index import DashboardView
 
 class AppointmentListView(DashboardView, ListView):
