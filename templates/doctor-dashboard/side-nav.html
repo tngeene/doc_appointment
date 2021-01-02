@@ -1,0 +1,31 @@
+<div class="sidebar">
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+      <li class="{% if '/admin' in request.path %}active{% endif %}">
+        <a href="{% url 'doctor_dashboard:index:index' %}">
+          <i class="tim-icons icon-chart-pie-36"></i>
+          <p>Dashboard</p>
+        </a>
+      </li>
+
+      <li class="{% if '/appointments' in request.path %}active{% endif %}">
+        <a href="{% url 'doctor_dashboard:appointments:appointments_list' %}">
+          <i class="tim-icons icon-calendar-60"></i>
+          <p>Appointments</p>
+        </a>
+      </li>
+      <li class="{% if '/events' in request.path %}active{% endif %}">
+        <a href="{% url 'doctor_dashboard:events:events_list' %}">
+          <i class="tim-icons icon-send"></i>
+          <p>Events/News</p>
+        </a>
+      </li>
+      <li>
+        <a href="./user.html">
+          <i class="tim-icons icon-single-02"></i>
+          <p>My Profile</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

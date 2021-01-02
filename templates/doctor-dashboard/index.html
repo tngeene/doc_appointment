@@ -2,166 +2,120 @@
 {% block content %}
 
         <div class="row">
-          <div class="col-lg-3">
+          <div class="col-lg-4">
             <div class="card card-chart">
               <div class="card-header">
                 <h5 class="card-category">Total Appointments</h5>
-                <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i>0</h3>
+                <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i>{{appointments_count}}</h3>
               </div>
             </div>
           </div>
-          <div class="col-lg-3">
+          <div class="col-lg-4">
             <div class="card card-chart">
               <div class="card-header">
-                <h5 class="card-category">Confirmed Appointments</h5>
-                <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i>0</h3>
+                <h5 class="card-category">Pending Appointments</h5>
+                <h3 class="card-title"><i class="tim-icons icon-single-02 text-info"></i>{{pending_appointments_count}}</h3>
               </div>
             </div>
           </div>
-          <div class="col-lg-3">
-            <div class="card card-chart">
-              <div class="card-header">
-                <h5 class="card-category">Cancelled Appointments</h5>
-                <h3 class="card-title"><i class="tim-icons icon-book-bookmark text-success"></i>0</h3>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3">
+          <div class="col-lg-4">
             <div class="card card-chart">
               <div class="card-header">
                 <h5 class="card-category">Events</h5>
-                <h3 class="card-title"><i class="tim-icons icon-send text-success"></i>0</h3>
+                <h3 class="card-title"><i class="tim-icons icon-send text-success"></i>{{events_count}}</h3>
               </div>
             </div>
           </div>
-          
         </div>
-        <div class="row">
+        <div class="row mb-3">
           <div class="col-md-12">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title">Upcoming Appointments</h4>
+                <h4 class="card-title">Recent Appointments</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table tablesorter " id="">
                     <thead class=" text-primary">
                       <tr>
-                        <th>
-                          Name
-                        </th>
-                        <th>
-                          Country
-                        </th>
-                        <th>
-                          City
-                        </th>
-                        <th class="text-center">
-                          Salary
-                        </th>
+                            <th>Patient</th>
+                            <th>Department</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          Dakota Rice
-                        </td>
-                        <td>
-                          Niger
-                        </td>
-                        <td>
-                          Oud-Turnhout
-                        </td>
-                        <td class="text-center">
-                          $36,738
-                        </td>
+                      {% for appointment in recent_appointments %}
+                        <tr>
+                            <td> {{ appointment.name }}</td>
+                            <td> {{ appointment.department.name}}</td>
+                            <td> {{ appointment.doctor.get_full_name }}</td>
+                            <td> {{ appointment.date }}</td>
+                            {% if appointment.is_confirmed %}
+                            <td>
+                                <span class="badge badge-pill badge-success">Confirmed</span>
+                            </td>
+                            {% else %}
+                            <td>
+                                <span class="badge badge-pill badge-danger">Pending</span>
+                            </td>
+                            {% endif %}
+                            <td>
+                                <a href="{% url 'doctor_dashboard:appointments:appointment_details' appointment.pk %}">
+                                    <button class="btn btn-primary btn-sm">View</button>
+                                </a>
+                        </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Appointments Requested Yet.</td>
+                            </tr>
+                        {% endfor %}
                       </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title">Recent Events</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
                       <tr>
-                        <td>
-                          Minerva Hooper
-                        </td>
-                        <td>
-                          Curaçao
-                        </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-center">
-                          $23,789
-                        </td>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Added</th>
+                            <th>Action</th>
                       </tr>
-                      <tr>
-                        <td>
-                          Sage Rodriguez
-                        </td>
-                        <td>
-                          Netherlands
-                        </td>
-                        <td>
-                          Baileux
-                        </td>
-                        <td class="text-center">
-                          $56,142
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Philip Chaney
-                        </td>
-                        <td>
-                          Korea, South
-                        </td>
-                        <td>
-                          Overland Park
-                        </td>
-                        <td class="text-center">
-                          $38,735
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Doris Greene
-                        </td>
-                        <td>
-                          Malawi
-                        </td>
-                        <td>
-                          Feldkirchen in Kärnten
-                        </td>
-                        <td class="text-center">
-                          $63,542
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Mason Porter
-                        </td>
-                        <td>
-                          Chile
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-center">
-                          $78,615
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Jon Porter
-                        </td>
-                        <td>
-                          Portugal
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-center">
-                          $98,615
-                        </td>
-                        <td class="text-center">
-                          <button class="btn btn-sm btn-secondary">View</button>
-                        </td>
+                    </thead>
+                    <tbody>
+                      {% for event in recent_events %}
+                        <tr>
+                            <td> {{ event.name }}</td>
+                            <td> {{ description.phone_number|truncatechars:15 }}</td>
+                            <td> {{ event.date }}</td>
+                            <td> {{ event.created_at }}</td>
+                            <td>
+                                <a href="{% url 'doctor_dashboard:events:event_details' event.pk %}">
+                                    <button class="btn btn-primary btn-sm">View</button>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="10">No Events Uploaded Yet.</td>
+                            </tr>
+                        {% endfor %}
                       </tr>
                     </tbody>
                   </table>

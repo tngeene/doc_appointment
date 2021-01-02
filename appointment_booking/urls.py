@@ -15,6 +15,7 @@ urlpatterns = [
     path('accounts/login-redirect/', login_redirect, name='login_redirect'),
 
     path('admin-dashboard/', include('dashboard.urls', namespace='dashboard')),
+    path('dashboard/', include('doctor_dashboard.urls', namespace='doctor_dashboard')),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
