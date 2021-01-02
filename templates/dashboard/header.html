@@ -22,7 +22,11 @@
               <li class="dropdown nav-item">
                 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                   <div class="photo">
+                    {% if request.user.is_anonymous or request.user.photo == False %}
                     <img src="{% static 'dashboard/img/user_icon.png' %}" alt="Profile Photo">
+                    {% else %}
+                    <img src="{{ request.user.photo.url }}" alt="{{request.user.first_name}}">
+                    {% endif %}
                   </div>
                   <b class="caret d-none d-lg-block d-xl-block"></b>
                   <p class="d-lg-none">
@@ -40,4 +44,4 @@
             </ul>
           </div>
         </div>
-      </nav>s
+      </nav>

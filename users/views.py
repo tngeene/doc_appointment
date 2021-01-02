@@ -3,7 +3,6 @@ from core.mixins import CSRFExemptMixin
 from django.contrib.auth import get_user_model, logout
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
 
