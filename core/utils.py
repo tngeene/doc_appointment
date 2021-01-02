@@ -28,7 +28,7 @@ def mark_appointment_as_confirmed(request, pk):
     messages.success(request, "Appointment Confirmed")
     if user.role == 'admin' or user.role == 'staff':
         return redirect('dashboard:appointments:appointment_details', pk=pk)
-    return redirect("doctor_dashboard:appointments:appointmen_details", pk=pk)
+    return redirect("doctor_dashboard:appointments:appointment_details", pk=pk)
 
 
 def mark_appointment_as_declined(request, pk):
@@ -44,4 +44,4 @@ def mark_appointment_as_declined(request, pk):
     messages.success(request, "Appointment Declined")
     if user.role == 'admin' or user.role == 'staff':
         return redirect('dashboard:appointments:appointment_details', pk=pk)
-    return redirect("doctor_dashboard:appointments:appointmen_details", pk=pk)
+    return redirect("doctor_dashboard:appointments:appointment_details", pk=pk)

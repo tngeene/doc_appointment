@@ -24,22 +24,17 @@
 
 <body>
     <div class="wrapper">
+
+        {% if request.user.role == 'admin' %}
         {% include 'dashboard/side-nav.html' %}
+        {% elif request.user.role == 'doctor' %}
+        {% include 'doctor-dashboard/side-nav.html' %}
+        {% endif %}
 
         <div class="main-panel">
             {% include 'dashboard/header.html' %}
-            {% comment %} {% if request.user.role == 'admin' %}
-            {% include 'side-nav.html' %}
-            {% elif request.user.role == '' %}
-            {% include 'player-side-nav.html' %}
-            {% elif request.user.role == 'trainer' %}
-            {% include 'trainer-side-nav.html' %}
-            {% endif %} {% endcomment %}
-
             <div class="content">
-                
                     {% block content %}{% endblock %}
-
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="copyright">
