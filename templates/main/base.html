@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Doc Appointment</title>
+  <title>Doc Appointment {% block title %}{% endblock title %}</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -76,7 +76,7 @@
           {% if request.user.is_authenticated %}
           <li class="drop-down"><a href="">{{request.user.get_full_name}}</a>
             <ul>
-              <li><a href="#">My Profile</a></li>
+              <li><a href="{% url 'home:my_profile' %}">My Profile</a></li>
               <li><a href="#">Dashboard</a></li>
               <hr/>
               <li><a href="{% url 'logout' %}">Logout</a></li>
