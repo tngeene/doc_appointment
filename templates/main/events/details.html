@@ -1,110 +1,136 @@
-{% extends 'main/base.html' %}
-{% load static %}
-
-{% block title %} | {{event.name}}{% endblock title %}
+{% extends 'main/base.html' %} 
+{% load static %} 
+{% block title %} |{{event.name}}{% endblock title %} 
 
 {% block body %}
 <main id="main">
-
-    <!-- ======= Breadcrumbs Section ======= -->
-    <section class="breadcrumbs">
-      <div class="container">
-
-        <div class="d-flex justify-content-between align-items-center">
-          <h2>{{event.name}}</h2>
-          <ol>
-            <li><a href="/">Home</a></li>
-            <li>{{event.name}}</li>
-          </ol>
-        </div>
-
+  <!-- ======= Breadcrumbs Section ======= -->
+  <section class="breadcrumbs">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>{{event.name}}</h2>
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li>{{event.name}}</li>
+        </ol>
       </div>
-    </section><!-- End Breadcrumbs Section -->
+    </div>
+  </section>
+  <!-- End Breadcrumbs Section -->
 
-    <section class="inner-page">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-8 mr-1">
-            <img src="{{event.photo.url}}" alt="{{event.name}}" class="img-fluid mb-2">
-            <h4 class="text-bold mb-3">{{event.name}}</h4>
-            <dl class="row">
-              <dt class="col-sm-3">By {{event.created_by.get_full_name}}</dt>
-              <dd class="col-sm-9 text-right">{{event.created_at}}</dd>
-            </dl>
-            <hr/>
-            <p class="text-left">
-              {{event.description}}
-            </p>
-            {% if request.user.is_authenticated %}
-            <div class="row mt-4">
-              <div id="booking" class="col-5 text-left">
-                {% if request.user in event.attendees.all %}
-                <button id="cancel-booking" type="button" class="btn btn-sm btn-danger">Cancel</button>
-                {% else%}
-                <button id="make-booking" type="button" class="btn btn-sm btn-primary mr-1">Book Attendance</button>
-                {% endif %}
-              </div>
+  <section class="inner-page">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mr-1">
+          <img
+            src="{{event.photo.url}}"
+            alt="{{event.name}}"
+            class="img-fluid mb-2"
+          />
+          <h4 class="text-bold mb-3">{{event.name}}</h4>
+          <dl class="row">
+            <dt class="col-sm-3">By {{event.created_by.get_full_name}}</dt>
+            <dd class="col-sm-9 text-right">{{event.created_at}}</dd>
+          </dl>
+          <hr />
+          <p class="text-left">{{event.description}}</p>
+          {% if request.user.is_authenticated %}
+          <div class="row mt-4">
+            <div id="booking" class="col-5 text-left">
+              {% if request.user in event.attendees.all %}
+              <button
+                id="cancel-booking"
+                type="button"
+                class="btn btn-sm btn-danger"
+              >
+                Cancel
+              </button>
+              {% else%}
+              <button
+                id="make-booking"
+                type="button"
+                class="btn btn-sm btn-primary mr-1"
+              >
+                Book Attendance
+              </button>
+              {% endif %}
             </div>
-            {% endif %}
           </div>
-          <div class="col-md-3 mx-auto">
-            <div class="row">
-              <div class="col-12 float-right">
-                <h6 class="text-bold">Upcoming events</h6>
-              </div>
-              {% for event in events %}
-              <div class="col-12 mb-2">
-                <a href="{% url 'home:event' event.id %}" class="text-dark">
-                <i class='bx bx-calendar-plus mr-1'></i>
+          {% endif %}
+        </div>
+        <div class="col-md-3 mx-auto">
+          <div class="row">
+            <div class="col-12 float-right">
+              <h6 class="text-bold">Upcoming events</h6>
+            </div>
+            {% for event in events %}
+            <div class="col-12 mb-2">
+              <a href="{% url 'home:event' event.id %}" class="text-dark">
+                <i class="bx bx-calendar-plus mr-1"></i>
                 <span>{{event.name}}</span>
               </a>
-              </div>
-              {% empty %}
-              <div class="col-12">
-                <p class="text-center">No Upcoming events</p>
-              </div>
-              {% endfor %}
             </div>
+            {% empty %}
+            <div class="col-12">
+              <p class="text-center">No Upcoming events</p>
+            </div>
+            {% endfor %}
           </div>
         </div>
       </div>
-    </section>
-
-  </main><!-- End #main -->
+    </div>
+  </section>
+</main>
+<!-- End #main -->
 {% endblock body %}
 
 {% block scripts %}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-const toggleBooking = async(event, action) => {
-  try {
-    await axios.post('/events/booking/', { event, action }).then((response)=>{
-      if(response.status === 200){
-        swal({
-          title: `Event ${action} successful.`,
-          icon: "success",
-          timer: 2000,
+  const toggleBooking = async (event, action) => {
+    try {
+      await axios
+        .post('/events/booking/', { event, action })
+        .then((response) => {
+          if (response.status === 200) {
+            swal({
+              title: `Event ${action} successful.`,
+              icon: 'success',
+              timer: 2000,
+            });
+            if (action === 'attending') {
+              const bookBtn = $('#make-booking');
+              bookBtn.remove();
+              $('#booking').append('<button id="cancel-booking" type="button" class="btn btn-sm btn-danger">Cancel</button>');
+            } else {
+              const cancelBtn = $('#cancel-booking');
+              cancelBtn.remove();
+              $('#booking').append('<button id="make-booking" type="button" class="btn btn-sm btn-primary">Book attendance</button>')
+            }
+          }
+        });
+    } catch (error) {
+      swal({
+        title: 'Event could not be booked at this time',
+        icon: 'error',
+        timer: 2000,
       });
-      }
-    })
-  }catch(error){
-    swal({
-      title: 'Event could not be booked at this time',
-      icon: "error",
-      timer: 2000,
-  });
-  }
-}
+    }
+  };
 
-function bookEvent(){
-  $('#make-booking').click(function(){toggleBooking('{{event.id}}','attending')});
-}
-function cancelEventBooking(){
-  $('#cancel-booking').click(function(){toggleBooking('{{event.id}}','cancelled')});
-}
-$(document).ready(function () {
-  bookEvent()
-  cancelEventBooking()
-});
+  function bookEvent() {
+    $('#make-booking').click(function () {
+      toggleBooking('{{event.id}}', 'attending');
+    });
+  }
+  function cancelEventBooking() {
+    $('#cancel-booking').click(function () {
+      toggleBooking('{{event.id}}', 'cancelled');
+    });
+  }
+  // $(document).ready(function () {
+    bookEvent();
+    cancelEventBooking();
+  // });
 </script>
 {% endblock scripts %}
