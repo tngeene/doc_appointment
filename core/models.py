@@ -44,6 +44,9 @@ class Appointment(CommonInfo):
     def __str__(self) -> str:
         return f'Appointment by {self.name} on {self.date}'
 
+    class Meta:
+        unique_together = ('doctor', 'date', )
+
 
 
 

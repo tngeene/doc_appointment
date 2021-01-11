@@ -119,18 +119,18 @@
   };
 
   function bookEvent() {
-    $('#make-booking').click(function () {
+    $('#make-booking').on('click', function () {
       toggleBooking('{{event.id}}', 'attending');
     });
   }
   function cancelEventBooking() {
-    $('#cancel-booking').click(function () {
+    $('#cancel-booking').on('click', function () {
       toggleBooking('{{event.id}}', 'cancelled');
     });
   }
-  // $(document).ready(function () {
+  $(document).ready(function () {
     bookEvent();
     cancelEventBooking();
-  // });
+  });
 </script>
 {% endblock scripts %}

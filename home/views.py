@@ -20,6 +20,7 @@ class HomePageTemplateView(TemplateView):
         doctors = User.objects.filter(role='doctor')
         doctors_count = doctors.count()
         doctors = doctors[0:5]
+        context['events'] = Event.objects.all()[:5]
         context['departments'] = Department.objects.all()
         context['doctors'] = doctors
         context['doctors_count'] = doctors_count

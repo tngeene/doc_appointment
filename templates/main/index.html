@@ -148,7 +148,7 @@
 
         <div class="section-title">
           <h2>Services</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <p>Our world class services.</p>
         </div>
 
         <div class="row">
@@ -214,7 +214,7 @@
           <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
         </div>
 
-        <form action="" method="post" role="form" class="php-email-form" id="appoinment-form">
+        <form method="post" role="form" class="php-email-form" id="appoinment-form">
           {% csrf_token %}
           {% if request.user.is_anonymous %}
           <div class="form-row">
@@ -233,9 +233,11 @@
           </div>
           {% endif %}
           <div class="form-row">
-            <div class="col-md-4 form-group">
-              <input type="datetime" name="date" class="form-control datepicker" id="date" placeholder="Appointment Date" required data-msg="Please enter at least 4 chars">
-              <div class="validate"></div>
+            <div class="col-md-4 form-group input-group date" id="datetimepicker" data-target-input="nearest">
+              <input type="text" class="form-control datetimepicker-input" id="customdatetimepicker" data-date-format="yyyy-mm-dd hh:ii" data-target="#datetimepicker" placeholder="Appointment Date" />
+              <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+              </div>
             </div>
             <div class="col-md-4 form-group">
               <select name="department" id="department" class="form-control">
@@ -257,7 +259,6 @@
           </div>
           <div class="mb-3">
             <div class="loading">Loading</div>
-            <div class="error-message"></div>
             <div class="sent-message">Your appointment request has been sent successfully. Thank you!</div>
           </div>
           <div class="text-center"><button type="submit">Make an Appointment</button></div>
@@ -301,7 +302,7 @@
 
         <div class="section-title">
           <h2>Doctors</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <p>Our dedicated team</p>
         </div>
 
         <div class="row">
@@ -312,6 +313,35 @@
 
       </div>
     </section><!-- End Doctors Section -->
+
+       <!-- ======= Testimonials Section ======= -->
+       <section id="testimonials" class="testimonials">
+        <div class="container">
+          <div class="section-title">
+            <h2>Events</h2>
+            <p>Upcoming events.</p>
+          </div>
+          <div class="owl-carousel testimonials-carousel">
+            {% for event in events %}
+            <div class="testimonial-wrap">
+              <a href="{% url 'home:event' event.id %}" class="text-dark">
+              <div class="testimonial-item">
+                <img src="{{event.photo.url}}" class="testimonial-img" alt="">
+                <h3>{{event.name}}</h3>
+                <h4>{{event.venue}}</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  {{event.description|truncatechars:40}}
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+  
+        </div>
+      </section><!-- End Testimonials Section -->
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
