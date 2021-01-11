@@ -326,7 +326,11 @@
             <div class="testimonial-wrap">
               <a href="{% url 'home:event' event.id %}" class="text-dark">
               <div class="testimonial-item">
-                <img src="{{event.photo.url}}" class="testimonial-img" alt="">
+              {% if event.photo %}
+              <img src="{{event.photo.url}}" class="testimonial-img" alt="">
+              {% else %}
+              <img src="{% static 'dashboard/img/meeting.png' %}" class="testimonial-img" alt="">
+              {% endif %}
                 <h3>{{event.name}}</h3>
                 <h4>{{event.venue}}</h4>
                 <p>

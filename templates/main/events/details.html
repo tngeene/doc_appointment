@@ -22,11 +22,19 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 mr-1">
-          <img
+        {% if event.photo %}
+        <img
             src="{{event.photo.url}}"
             alt="{{event.name}}"
             class="img-fluid mb-2"
           />
+          {% else %}
+          <img
+            src="{% static 'dashboard/img/meeting.png' %}"
+            alt="{{event.name}}"
+            class="img-fluid mb-2"
+          />
+        {% endif %}
           <h4 class="text-bold mb-3">{{event.name}}</h4>
           <dl class="row">
             <dt class="col-sm-3">By {{event.created_by.get_full_name}}</dt>
