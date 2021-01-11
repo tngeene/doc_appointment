@@ -5,9 +5,6 @@ from core.models import Event
 from .index import DashboardView
 from django.urls import reverse_lazy
 
-
-
-
 class EventListView(DashboardView, ListView):
     model = Event
     template_name = 'doctor-dashboard/events/list.html'
