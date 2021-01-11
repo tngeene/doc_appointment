@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from .mixins import CSRFExemptMixin
 from .models import Appointment
 from .serializers import AppointmentSerializer
-from django.utils.timezone import now
+
 
 
 # Create your views here.
@@ -18,8 +18,7 @@ class AppointMentCreateAPIView(APIView):
 
         user = request.user
         data = request.data
-
-        appointment = Appointment.objects.create(department_id=data['department'], doctor_id=data['doctor'],date=now(),message=data['message'])
+        appointment = Appointment.objects.create(department_id=data['department'], doctor_id=data['doctor'],date=data['date'],message=data['message'])
 
         if user.is_anonymous == False:
             appointment.email = user.email

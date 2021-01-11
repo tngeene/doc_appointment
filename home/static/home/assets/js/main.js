@@ -180,10 +180,10 @@
   });
 
   // Initiate the datepicker plugin
-  $(document).ready(function() {
-    $('.datepicker').datepicker({
-      autoclose: true
-    });
-  });
+  // $(document).ready(function() {
+  //   $('.datepicker').datepicker({
+  //     autoclose: true
+  //   });
+  // });
 
 })(jQuery);

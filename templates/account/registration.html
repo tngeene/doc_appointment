@@ -1,0 +1,17 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <h4 class="text-center">Register</h4>
+    <form method="post">
+        {% csrf_token %}
+        {% include 'partials/forms/form.html' %}
+        <div class="clearfix py-3">
+            <div class="float-left pt-1">
+                <a href="{% url 'account_login' %}">Login page</a>
+            </div>
+            <button class="btn btn-dark float-right px-3" type="submit">Sign Up</button>
+        </div>
+    </form>
+{% endblock %}

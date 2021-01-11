@@ -46,13 +46,17 @@ $(document).ready(function () {
   $("#department").on("change", function () {
     getDoctors(this.value);
   });
+  $('#datetimepicker').datetimepicker({
+    format: 'YYYY-MM-DD HH:mm:ss'
+  });
 });
 
 function formData(){
+  console.log($("#customdatetimepicker").val())
   const name = $("#name").val();
   const email = $("#email").val();
   const phone = $("#phone").val();
-  const date = $("#date").val();
+  const date = $("#customdatetimepicker").val();
   const doctor = $("#doctor").val();
   const department = $("#department").val();
   const message = $("#message").val();
@@ -65,7 +69,7 @@ function clearFormData(){
   $("#name").val('');
   $("#email").val('');
   $("#phone").val('');
-  $("#date").val('');
+  $("#customdatetimepicker").val('');
   $("#message").val('');
 }
 
@@ -98,8 +102,4 @@ $('#appoinment-form').on('submit',function(event){
 
   // Continue the form submit
   // event.currentTarget.submit();
-});
-
-$('.datepicker').datetimepicker({
-  format: 'DD-MM-YYYY HH:mm:ss'
 });
