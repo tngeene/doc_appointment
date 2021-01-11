@@ -46,13 +46,13 @@ $(document).ready(function () {
   $("#department").on("change", function () {
     getDoctors(this.value);
   });
-  $('#datetimepicker').datetimepicker({
-    format: 'YYYY-MM-DD HH:mm:ss'
+  $("#datetimepicker").datetimepicker({
+    format: "YYYY-MM-DD HH:mm:ss",
   });
 });
 
-function formData(){
-  console.log($("#customdatetimepicker").val())
+function formData() {
+  console.log($("#customdatetimepicker").val());
   const name = $("#name").val();
   const email = $("#email").val();
   const phone = $("#phone").val();
@@ -60,45 +60,49 @@ function formData(){
   const doctor = $("#doctor").val();
   const department = $("#department").val();
   const message = $("#message").val();
-  return { name, email, phone, date, doctor, department, message }
+  return { name, email, phone, date, doctor, department, message };
 }
 
-function clearFormData(){
-  $("#doctor").val('');
-  $("#department").val('');
-  $("#name").val('');
-  $("#email").val('');
-  $("#phone").val('');
-  $("#customdatetimepicker").val('');
-  $("#message").val('');
+function clearFormData() {
+  $("#doctor").val("");
+  $("#department").val("");
+  $("#name").val("");
+  $("#email").val("");
+  $("#phone").val("");
+  $("#customdatetimepicker").val("");
+  $("#message").val("");
 }
 
-const createAppointment = async() => {
+const createAppointment = async () => {
   try {
-    await axios.post('core/create-appointment/', formData()).then((response)=>{
-      if(response.status === 200){
-        swal({
-          title: 'Appointment booked successfully',
-          icon: "success",
-          timer: 2000,
+    await axios
+      .post("core/create-appointment/", formData())
+      .then((response) => {
+        if (response.status === 200) {
+          swal({
+            title: "Appointment booked successfully",
+            icon: "success",
+            timer: 2000,
+          });
+          clearFormData();
+        }
       });
-        clearFormData()
-      }
-    })
-  }catch(error){
-    swal({
-      title: 'Appointment could not be booked at this time',
-      icon: "error",
-      timer: 2000,
-  });
+  } catch (error) {
+    if ((error.response.status = 500)) {
+      swal({
+        title: "Doctor has an appointment set for this time, please choose another time.",
+        icon: "info",
+        timer: 2000,
+      });
+    }
   }
-}
-$('#appoinment-form').on('submit',function(event){
+};
+$("#appoinment-form").on("submit", function (event) {
   // block form submit event
   event.preventDefault();
 
   // Do some stuff here
-  createAppointment()
+  createAppointment();
 
   // Continue the form submit
   // event.currentTarget.submit();

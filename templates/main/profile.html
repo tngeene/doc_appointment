@@ -108,6 +108,7 @@
     </div>
 </div>
 
+{% if request.user.role == 'patient' %}
 <div class="row mt-4">
   <div class="col-md-12  mt-4">
     {% include 'partials/nav-pills/doctors.html' %}
@@ -365,6 +366,7 @@
     </div>
   </div>
 </div>
+{% endif %}
 
 {% endblock %} {% block scripts %}
 <script src="{% static 'dashboard/js/jquery.dataTables.min.js' %}"></script>

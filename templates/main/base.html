@@ -70,11 +70,12 @@
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li class="active"><a href="index.html">Home</a></li>
+          <li class="active"><a href="{% url 'home:homepage' %}">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#departments">Departments</a></li>
           <li><a href="#doctors">Doctors</a></li>
+          <li><a href="#testimonials">Events</a></li>
           {% if request.user.is_authenticated %}
           <li class="drop-down"><a href="">{{request.user.get_full_name}}</a>
             <ul>
