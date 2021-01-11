@@ -80,7 +80,11 @@
           <li class="drop-down"><a href="">{{request.user.get_full_name}}</a>
             <ul>
               <li><a href="{% url 'home:my_profile' %}">My Profile</a></li>
-              <li><a href="#">Dashboard</a></li>
+              {% if request.user.role == 'admin' %}
+              <li><a href="{% url 'dashboard:index:index' %}">Dashboard</a></li>
+              {% elif request.user.role == 'doctor' %}
+              <li><a href="{% url 'doctor_dashboard:index:index' %}">Dashboard</a></li>
+              {% endif %}
               <hr/>
               <li><a href="{% url 'logout' %}">Logout</a></li>
             </ul>

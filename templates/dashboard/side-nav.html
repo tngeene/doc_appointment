@@ -25,12 +25,6 @@
           <p>Patients</p>
         </a>
       </li>
-      <li>
-        <a href="./map.html">
-          <i class="tim-icons icon-single-02"></i>
-          <p>Receptionists</p>
-        </a>
-      </li>
       <li class="{% if '/appointments' in request.path %}active{% endif %}">
         <a href="{% url 'dashboard:appointments:appointments_list' %}">
           <i class="tim-icons icon-calendar-60"></i>
