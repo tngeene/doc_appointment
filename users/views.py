@@ -1,12 +1,15 @@
 from allauth.account.views import LoginView
+import django
 from core.mixins import CSRFExemptMixin
-from django.contrib.auth import get_user_model, logout
+from django.contrib.auth import get_user_model, logout, authenticate, login
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
-
+from django.views.generic import FormView, UpdateView
 from .models import Department
+from .forms import PatientSignUpForm
 from .serializers import DepartmentSerializer, UserSerializer
 
 User = get_user_model()
@@ -49,3 +52,41 @@ def login_redirect(request):
 class LoginUserView(LoginView):
     def get_success_url(self):
         return reverse_lazy('login_redirect')
+
+def register_redirect(request):
+    messages.success(request, "Account registration successful")
+    return redirect('home:my_profile', pk=request.user.pk)
+
+class RegisterUserView(UpdateView):
+    def get_success_url(self):
+        return reverse_lazy('register_redirect')
+
+class SignUpView(FormView):
+    template_name = 'account/signup.html'
+    form_class = PatientSignUpForm
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        username = data['email'].lower()
+        raw_password = data['password1']
+
+        user = User.objects.create_user(
+            username=username,
+            email=data['email'],
+            password=raw_password
+        )
+        user.first_name = data['first_name']
+        user.last_name = data['last_name']
+        user.gender = data['gender']
+        user.role = 'patient'
+        user.save()
+
+        auth_user = authenticate(username=username, password=raw_password)
+        login(self.request, auth_user)
+
+        return super(SignUpView, self).form_valid(form)
+
+    def get_success_url(self):
+        user = self.request.user
+        if user.role == 'patient':
+            return reverse_lazy('home:my_profile')

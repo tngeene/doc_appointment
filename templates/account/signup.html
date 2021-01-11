@@ -1,0 +1,38 @@
+{% extends 'account/base.html' %}
+
+{% block title %}
+    Sign Up
+{% endblock %}
+
+
+{% block content %}
+    <section class="bg-success h-25"></section>
+    <section class="bg-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow-sm border-0 contact-header mb-4">
+                        <div class="card-body">
+                            <div class="py-3">
+                                <h5 class="text-center font-weight-normal">Patient Registration</h5>
+                                <p class="text-center font-weight-normal text-muted">
+                                    Register to become a member of Medilab's growing community.
+                                </p>
+                            </div>
+                            <div class="col-md-8 py-5 mx-auto">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {% include 'partials/forms/form.html' %}
+                                    <div class="text-center py-3">
+                                        <p class="float-left">Already have an account? <a href="{% url 'account_login' %}">Sign In</a></p>
+                                        <button class="btn btn-success" style="text-transform:none;">Create Account</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
